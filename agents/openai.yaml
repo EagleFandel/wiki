@@ -1,0 +1,4 @@
+interface:
+  display_name: "Wiki"
+  short_description: "Build a compounding wiki and ingest PDFs, docs, and images"
+  default_prompt: "Use $wiki to initialize or update a persistent workspace wiki, extract PDFs/docs/images when needed, ingest new source material, and keep the knowledge base current."
