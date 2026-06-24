@@ -86,7 +86,7 @@ Use when the user wants a persistent workspace wiki.
 6. If the workspace has an instruction or memory file, add a brief note that the project maintains a wiki in `wiki/`
 7. Initialize a git repo if one does not exist, and make a baseline commit
 
-If you want deterministic scaffolding, use `scripts/init_wiki.py`.
+If you want deterministic scaffolding, use `scripts/init_wiki.py "Title" "Purpose"`.
 
 ### INGEST
 
@@ -174,7 +174,7 @@ Look for:
 - contradictions between pages
 - claims that newer sources may have superseded
 
-For quick drift detection, use `scripts/check_wiki_drift.py`.
+For quick drift detection, use `scripts/check_wiki_drift.py`. For a fuller lint, use `scripts/lint_wiki.py`.
 
 ### REFRESH
 

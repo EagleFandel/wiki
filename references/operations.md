@@ -4,31 +4,21 @@
 
 Use `scripts/init_wiki.py` when you want deterministic scaffolding.
 
-It should create:
+```bash
+python scripts/init_wiki.py "My Wiki" "Knowledge base for my project."
+```
 
-- `raw/`
-- `raw/inbox/`
-- `raw/articles/`
-- `raw/papers/`
-- `raw/assets/`
-- `wiki/index.md`
-- `wiki/log.md`
-- `wiki/schema.md`
-- `wiki/overview.md`
-- `wiki/active-questions.md`
-- `wiki/maps/`
-- `wiki/concepts/`
-- `wiki/entities/`
-- `wiki/sources/`
-- `wiki/decisions/`
-- `wiki/queries/`
-- `outputs/`
+It creates:
+
+- `raw/` with `inbox/`, `articles/`, `papers/`, `assets/`, `.extracted/`
+- `wiki/` with `index.md`, `log.md`, `schema.md`, `overview.md`, `active-questions.md`, and subdirectories
+- `outputs/` with `tokens.css` and `dashboard-template.html`
 - `AGENTS.md` (project-level schema contract)
 
 After init:
 
 1. Record an init entry in `wiki/log.md`
-2. Initialize git if it is not already present and make a baseline commit
+2. Initialize git if it is not already present
 3. If `raw/` already has files, identify them and suggest or run SYNC/INGEST
 
 ## INGEST
@@ -102,6 +92,12 @@ A good query answer usually does all of this:
 
 For complex syntheses, prefer HTML: spatial layouts, tabs, collapsible sections, comparison tables, and inline visualizations all make dense knowledge easier to consume than a linear markdown wall.
 
+Use `scripts/render_html.py` to render an existing markdown output:
+
+```bash
+python scripts/render_html.py outputs/2026-06-21-query-slug.md --theme report
+```
+
 ## DIGEST
 
 Use for periodic syntheses: weekly recaps, milestone summaries, or "what have we learned lately?"
@@ -115,17 +111,24 @@ Use for periodic syntheses: weekly recaps, milestone summaries, or "what have we
 
 ## LINT
 
-Check:
+Use `scripts/lint_wiki.py` for a quick automated pass, then review manually.
+
+```bash
+python scripts/lint_wiki.py
+```
+
+Checks:
 
 - `raw/` files missing from `wiki/log.md`
 - `raw/` files newer than the latest wiki update in `wiki/log.md`
-- important topics missing a durable page
-- stale summaries in `overview.md`
-- duplicated or overlapping pages
-- broken relative links or `[[wikilinks]]`
-- pages with no useful references from `index.md`
-- contradictions between pages
-- claims that newer sources may have superseded
+- pages missing YAML frontmatter
+- broken `[[wikilinks]]`
+- orphan pages with no inbound links
+- pages not referenced from `index.md`
+- contradictions between pages (manual review)
+- claims that newer sources may have superseded (manual review)
+
+Pass `--json` for machine-readable output.
 
 ## REFRESH
 
@@ -137,6 +140,13 @@ Most common refresh outputs:
 - create or update a topic map in `wiki/maps/`
 - summarize unresolved issues in `active-questions.md`
 - capture stabilized tradeoffs in `wiki/decisions/`
+- regenerate the dashboard with `scripts/build_dashboard.py`
+
+```bash
+python scripts/build_dashboard.py --title "My Wiki"
+```
+
+This writes both `outputs/YYYY-MM-DD-wiki-dashboard.md` and `outputs/YYYY-MM-DD-wiki-dashboard.html`.
 
 ## Git Workflow
 
