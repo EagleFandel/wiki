@@ -39,10 +39,46 @@ outputs/YYYY-MM-DD-report-slug.html
 ## Rendering Workflow
 
 1. Write the answer/report/digest as markdown in `outputs/`.
-2. Convert the markdown to HTML with a renderer (Pandoc, `huashu-md-html`, or a small Python script).
+2. Convert the markdown to HTML with a renderer.
 3. Apply a clean, readable CSS theme.
 4. Link the HTML view from the markdown source.
 5. Log the output in `wiki/log.md`.
+
+### Integration with `huashu-md-html`
+
+If the project has `huashu-md-html` installed, prefer it for rendering. Map the output to a theme by purpose:
+
+| Output type | Recommended theme | Why |
+|---|---|---|
+| Essay or deep article | `article` | Tufte editorial feel, long-form reading |
+| Technical report / whitepaper | `report` | Publishing-grade, formal density |
+| Reading-only distribution | `reading` | Medium-style clean, minimal chrome |
+| Tutorial / explainer / digest | `interactive` | Sidebar TOC, navigable long-form |
+| Dashboard | — | Use `references/dashboard-template.html` instead; it has its own layout |
+
+Typical render flow:
+
+```bash
+# digest with sidebar navigation
+python -m huashu_md_html.render outputs/2026-06-21-digest.md --theme interactive
+
+# polished report
+python -m huashu_md_html.render outputs/2026-06-21-report.md --theme report
+
+# essay
+python -m huashu_md_html.render outputs/2026-06-21-essay.md --theme article
+```
+
+If `huashu-md-html` is not available, fall back to Pandoc or a minimal Python renderer using `references/tokens.css`.
+
+### Fallback without `huashu-md-html`
+
+```bash
+pandoc outputs/2026-06-21-report.md -o outputs/2026-06-21-report.html \
+  --standalone --css=tokens.css
+```
+
+Or use any markdown-to-HTML tool, then link `tokens.css` in the `<head>`.
 
 ## Output Format Examples
 

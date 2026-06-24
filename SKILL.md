@@ -250,12 +250,32 @@ Favor markdown outputs when the content is:
 ### How to Render HTML
 
 1. Write the answer first as markdown in `outputs/YYYY-MM-DD-slug.md`.
-2. Convert the markdown to HTML using a renderer (e.g. Pandoc, `huashu-md-html`, or a simple Python script).
+2. Convert the markdown to HTML using a renderer.
 3. Apply a clean, readable CSS theme. Avoid AI-slop defaults: no heavy gradients, no emoji-as-icons, no dark-blue `#0D1117` backgrounds unless requested.
 4. Save the HTML as `outputs/YYYY-MM-DD-slug.html`.
 5. Link the HTML from the markdown source and from `wiki/log.md` if useful.
 
-If you have `huashu-md-html` installed, prefer its themes (`article`, `report`, `reading`, `interactive`) for consistent output quality.
+#### Using `huashu-md-html`
+
+If the project has `huashu-md-html` installed, prefer it. Map outputs to themes by purpose:
+
+| Output type | Theme |
+|---|---|
+| Essay / deep article | `article` |
+| Technical report / whitepaper | `report` |
+| Reading-only distribution | `reading` |
+| Tutorial / explainer / digest | `interactive` |
+| Dashboard | use `references/dashboard-template.html` instead |
+
+Example:
+
+```bash
+python -m huashu_md_html.render outputs/2026-06-21-digest.md --theme interactive
+```
+
+#### Fallback
+
+If `huashu-md-html` is not available, use Pandoc with `references/tokens.css` or any minimal markdown-to-HTML tool.
 
 ### Output Checklist
 

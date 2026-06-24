@@ -137,6 +137,20 @@ When a new source contradicts an existing wiki page:
 
 For complex syntheses, prefer HTML: spatial layouts, tabs, collapsible sections, comparison tables, and inline visualizations make dense knowledge easier to consume than a linear markdown wall.
 
+### Rendering with `huashu-md-html`
+
+If `huashu-md-html` is available, use it to render markdown to HTML. Match the theme to the output purpose:
+
+| Output type | Theme |
+|---|---|
+| Essay / deep article | `article` |
+| Technical report / whitepaper | `report` |
+| Reading-only distribution | `reading` |
+| Tutorial / explainer / digest | `interactive` |
+| Dashboard | use `references/dashboard-template.html` |
+
+If `huashu-md-html` is not available, use Pandoc with `references/tokens.css` or another minimal markdown-to-HTML renderer.
+
 ### HTML Output Checklist
 
 - [ ] Markdown source exists in `outputs/` for future editing.
