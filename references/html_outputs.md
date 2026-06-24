@@ -87,9 +87,14 @@ Avoid these common AI-slop visual defaults:
 
 Prefer typography, whitespace, and consistent color over decoration.
 
-## CSS Theme Recommendations
+## Included Templates
 
-If using `huarshu-md-html`, pick by purpose:
+This skill ships with two reference files you can copy into a project:
+
+- `references/tokens.css` — cream-paper + ink design tokens, light/dark mode, low-saturation accents
+- `references/dashboard-template.html` — static wiki dashboard skeleton with inbox, recent nodes, top concepts, open questions, and stats
+
+Use them as starting points. The dashboard template uses mustache-style placeholders (`{{wiki_title}}`, `{{pending_count}}`, etc.) that any renderer can fill.
 
 - `article` — Tufte-style editorial, long essays
 - `report` — whitepaper / technical report
@@ -103,6 +108,24 @@ If rendering manually, start with a minimal stylesheet:
 - clear hierarchy: `h1` > `h2` > `h3`
 - subtle borders and alternating row backgrounds for tables
 - code blocks with light background and monospace font
+
+## Dashboard as a Primary Output
+
+The most valuable HTML view for a compounding wiki is often not a single article but a **dashboard**.
+
+A good wiki dashboard shows:
+
+- inbox of pending sources, grouped by bucket
+- today's new nodes / recent growth
+- islands (nodes with no inbound links)
+- top-cited concepts
+- open questions from `wiki/active-questions.md`
+- recent digests and query answers
+- aggregate stats: pages, sources, cross-links, recent ingests
+
+Generate the dashboard during DIGEST or REFRESH operations, or on demand when the user asks "show me the state of the wiki."
+
+See `references/dashboard-template.html` for a concrete layout.
 
 ## Linking Back
 

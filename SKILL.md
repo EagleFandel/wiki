@@ -295,6 +295,8 @@ Detailed templates and workflows live in:
 - `references/page_templates.md`
 - `references/html_outputs.md`
 - `references/schema-template.md`
+- `references/dashboard-template.html`
+- `references/tokens.css`
 
 ## Git, Versioning, and Epistemic Drift
 

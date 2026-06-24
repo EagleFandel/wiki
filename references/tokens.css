@@ -1,0 +1,97 @@
+/*
+ * Wiki HTML Output — Design Tokens
+ *
+ * Aesthetic: warm cream paper, ink-tinted text, low-saturation accents.
+ * Inspired by Inquiro's watercolor-on-cream direction and the anti-AI-slop rule:
+ * no heavy gradients, no emoji-as-icons, no dark-blue #0D1117 backgrounds.
+ */
+
+:root {
+  /* ── paper and ink ─────────────────────────────────────────────── */
+  --ink: #2a211c;              /* warm dark sepia, not black */
+  --paper: #f5efe4;            /* cream, slightly warmer than white */
+  --paper-raised: #fbf7ec;     /* card surface */
+  --paper-sunk: #eee7d8;       /* pressed surface, code blocks */
+  --hairline: #ddd3c2;         /* subtle borders */
+  --border-strong: #c9bba8;
+
+  /* ── text hierarchy ────────────────────────────────────────────── */
+  --text-primary: var(--ink);
+  --text-secondary: #5c5045;
+  --text-muted: #968978;
+  --text-link: #5a6e5a;
+
+  /* ── low-saturation accents (warm-leaning) ─────────────────────── */
+  --accent-coral: #c07362;     /* primary warm signal */
+  --accent-peach: #d39a76;     /* secondary warm */
+  --accent-moss: #7a8c64;      /* sage / trust / confidence HIGH */
+  --accent-mauve: #9a7a8e;     /* dusty purple */
+  --accent-dusk: #6a7a7c;      /* muted teal-grey */
+  --accent-rose: #b85c5c;      /* warning / confidence LOW */
+  --accent-amber: #c9985a;     /* confidence MED */
+
+  /* ── status aliases ────────────────────────────────────────────── */
+  --status-high: var(--accent-moss);
+  --status-med: var(--accent-amber);
+  --status-low: var(--accent-rose);
+  --status-active: var(--accent-coral);
+
+  /* ── shadow (warm, subtle) ─────────────────────────────────────── */
+  --shadow: rgba(42, 33, 28, 0.07);
+  --shadow-soft: rgba(42, 33, 28, 0.04);
+
+  /* ── typography ────────────────────────────────────────────────── */
+  --font-serif: "Newsreader", "Noto Serif SC", ui-serif, Georgia, serif;
+  --font-display: "Cormorant Garamond", "Newsreader", "Noto Serif SC", ui-serif, serif;
+  --font-body: "Newsreader", "Noto Serif SC", ui-serif, Georgia, serif;
+  --font-mono: "IBM Plex Mono", "SF Mono", ui-monospace, Menlo, monospace;
+
+  /* ── spacing (4pt grid) ────────────────────────────────────────── */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 3rem;
+  --sp-8: 4rem;
+
+  /* ── layout ────────────────────────────────────────────────────── */
+  --radius: 0.5rem;
+  --radius-sm: 0.25rem;
+  --max-width: 1200px;
+  --sidebar-width: 240px;
+
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #e8ddcb;
+    --paper: #1c1612;
+    --paper-raised: #24201a;
+    --paper-sunk: #161210;
+    --hairline: #332d25;
+    --border-strong: #4a4238;
+
+    --text-primary: var(--ink);
+    --text-secondary: #b8ad9c;
+    --text-muted: #7a6f60;
+    --text-link: #9ab89a;
+
+    --accent-coral: #d08872;
+    --accent-peach: #d9a585;
+    --accent-moss: #8a9c72;
+    --accent-mauve: #a98ca0;
+    --accent-dusk: #7c8d90;
+    --accent-rose: #c97a7a;
+    --accent-amber: #c9a86a;
+
+    --status-high: var(--accent-moss);
+    --status-med: var(--accent-amber);
+    --status-low: var(--accent-rose);
+
+    --shadow: rgba(0, 0, 0, 0.35);
+    --shadow-soft: rgba(0, 0, 0, 0.2);
+  }
+}

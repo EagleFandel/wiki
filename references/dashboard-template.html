@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{wiki_title}} — Wiki Dashboard</title>
+  <link rel="stylesheet" href="tokens.css" />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      background: var(--paper);
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: var(--sp-6) var(--sp-5);
+    }
+    header.page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: var(--sp-6);
+      padding-bottom: var(--sp-4);
+      border-bottom: 1px solid var(--hairline);
+    }
+    h1 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      margin: 0;
+    }
+    .meta {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: var(--sp-5);
+      margin-bottom: var(--sp-5);
+    }
+    @media (max-width: 860px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+    .card {
+      background: var(--paper-raised);
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius);
+      padding: var(--sp-5);
+      box-shadow: 0 1px 2px var(--shadow-soft);
+    }
+    .card h2 {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      margin: 0 0 var(--sp-4) 0;
+      display: flex;
+      align-items: center;
+      gap: var(--sp-3);
+    }
+    .card h2::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--hairline);
+    }
+    .count {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-family: var(--font-mono);
+    }
+    .bucket-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-4);
+    }
+    .bucket {
+      border-left: 3px solid var(--accent-coral);
+      padding-left: var(--sp-4);
+    }
+    .bucket.cooling { border-left-color: var(--accent-amber); }
+    .bucket-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--sp-2);
+    }
+    .bucket-name {
+      font-weight: 600;
+      font-family: var(--font-serif);
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: var(--sp-1) var(--sp-2);
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      background: var(--paper-sunk);
+      color: var(--text-secondary);
+    }
+    .badge.active {
+      background: rgba(122, 140, 100, 0.12);
+      color: var(--accent-moss);
+    }
+    .page-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-2);
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--sp-2);
+      padding: var(--sp-2) var(--sp-3);
+      background: var(--paper);
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+    }
+    .chip-meta {
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+    }
+    .node-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-3);
+    }
+    .node-item {
+      display: flex;
+      gap: var(--sp-3);
+      align-items: flex-start;
+      padding: var(--sp-3);
+      background: var(--paper);
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius-sm);
+    }
+    .node-kind {
+      font-size: 0.7rem;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: var(--text-muted);
+      min-width: 4.5rem;
+    }
+    .node-title {
+      font-weight: 600;
+      margin-bottom: var(--sp-1);
+    }
+    .node-meta {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+    .peripheral-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--sp-5);
+      margin-bottom: var(--sp-5);
+    }
+    @media (max-width: 860px) {
+      .peripheral-strip { grid-template-columns: 1fr; }
+    }
+    .peripheral-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-2);
+    }
+    .peripheral-list li {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    footer.stats {
+      display: flex;
+      gap: var(--sp-6);
+      padding-top: var(--sp-5);
+      border-top: 1px solid var(--hairline);
+    }
+    .stat {
+      text-align: center;
+    }
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      line-height: 1;
+      color: var(--text-primary);
+    }
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: var(--sp-1);
+    }
+    a {
+      color: var(--text-link);
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="page-header">
+      <div>
+        <h1>{{wiki_title}}</h1>
+        <div class="meta">{{greeting}} · {{long_date}} · 最后更新 {{last_updated}}</div>
+      </div>
+      <div class="meta">
+        <a href="../wiki/index.md">索引</a> ·
+        <a href="../wiki/log.md">日志</a> ·
+        <a href="{{markdown_source}}">编辑源文件</a>
+      </div>
+    </header>
+
+    <div class="grid">
+      <section class="card">
+        <h2>待处理 <span class="count">{{pending_count}} 项</span></h2>
+        <div class="bucket-list">
+          {{#pending_buckets}}
+          <div class="bucket {{tone}}">
+            <div class="bucket-header">
+              <span class="bucket-name">{{name}}</span>
+              <span class="badge {{#has_new}}active{{/has_new}}">{{count}}</span>
+            </div>
+            <div class="page-chips">
+              {{#items}}
+              <span class="chip">{{title}} <span class="chip-meta">{{size}}</span></span>
+              {{/items}}
+            </div>
+          </div>
+          {{/pending_buckets}}
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>今日生长 <span class="count">{{today_nodes_count}} 节点</span></h2>
+        <div class="node-list">
+          {{#today_nodes}}
+          <div class="node-item">
+            <div class="node-kind">{{kind}}</div>
+            <div>
+              <div class="node-title"><a href="{{path}}">{{title}}</a></div>
+              <div class="node-meta">{{confidence}} · {{xrefs}} 条引用</div>
+            </div>
+          </div>
+          {{/today_nodes}}
+        </div>
+        {{#island_count}}
+        <div style="margin-top: var(--sp-4); padding-top: var(--sp-4); border-top: 1px solid var(--hairline);">
+          <span class="badge">孤岛 {{island_count}}</span>
+          <span class="meta" style="margin-left: var(--sp-2);">没有入站引用的页面</span>
+        </div>
+        {{/island_count}}
+      </section>
+    </div>
+
+    <div class="peripheral-strip">
+      <section class="card">
+        <h2>高频概念</h2>
+        <ul class="peripheral-list">
+          {{#top_concepts}}
+          <li><a href="{{path}}">{{title}}</a> · {{citations}} 次引用</li>
+          {{/top_concepts}}
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>待回答问题</h2>
+        <ul class="peripheral-list">
+          {{#open_questions}}
+          <li>{{question}}</li>
+          {{/open_questions}}
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>最近 Digest</h2>
+        <ul class="peripheral-list">
+          {{#recent_digests}}
+          <li><a href="{{html_path}}">{{title}}</a> · {{date}}</li>
+          {{/recent_digests}}
+        </ul>
+      </section>
+    </div>
+
+    <footer class="stats">
+      <div class="stat"><div class="stat-num">{{total_pages}}</div><div class="stat-label">页面</div></div>
+      <div class="stat"><div class="stat-num">{{total_sources}}</div><div class="stat-label">源</div></div>
+      <div class="stat"><div class="stat-num">{{total_links}}</div><div class="stat-label">交叉引用</div></div>
+      <div class="stat"><div class="stat-num">{{recent_ingests}}</div><div class="stat-label">近两周 ingest</div></div>
+    </footer>
+  </div>
+</body>
+</html>
